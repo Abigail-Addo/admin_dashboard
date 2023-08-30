@@ -137,7 +137,7 @@ window.addEventListener('load', () => {
                         alert("employee updated successfully...!");
 
                         // this redirects to the same page with the updated changed
-                        window.location.href = window.location.href + '?refresh=true';
+                        window.location.href = window.location.href;
                     }
                 }
 
