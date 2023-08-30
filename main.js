@@ -5,7 +5,7 @@ window.addEventListener('load', () => {
         const response = await results.json();
         // console.log(response); //Fetch ends here
 
-        // get the employees in employer 1
+
         const employees = response.employee;
         // console.log(employees);
 
@@ -15,8 +15,8 @@ window.addEventListener('load', () => {
         employees.forEach(employee => {
             tContents += `
             <tr class="wrapper">
-            <td>${employee.name}</td>
             <td>${employee.job_title}</td>
+            <td>${employee.name}</td>
             <td>${employee.email}</td>
             <td>
             <span>
@@ -122,20 +122,14 @@ window.addEventListener('load', () => {
                     try {
                         const result = await fetch(`https://kojoyeboah53i-d962a2da663c.herokuapp.com/api/ordabl/employee/${employeeId}`);
                         const response = await result.json();
-                        console.log(response)
+                        console.log(response);
 
-                        // const {employee} = response;
-                        // console.log(employee);
+                         modal.querySelector('#nameInput').value = response.name;
+                         modal.querySelector('#jobInput').value = response.job_title;
+                         modal.querySelector('#emailInput').value = response.email;
+                         document.querySelector('div.d-none').id = response.id;
 
-                        console.log(response["employee"]["name"]);
 
-                        const nameInput = modal.querySelector('#nameInput');
-                        const jobInput = modal.querySelector('#jobInput');
-                        const emailInput = modal.querySelector('#emailInput');
-
-                        nameInput.value = response["employee"]["name"];
-                        jobInput.value = response["employee"].job_title;
-                        emailInput.value = response["employee"].email;
                     } catch (error) {
                         console.error(error);
                     }
@@ -143,6 +137,46 @@ window.addEventListener('load', () => {
 
             });
         });
+
+        const updateEmployee = document.querySelector('.submitUpdate');
+         updateEmployee.addEventListener('click', async () => {
+             let name = document.querySelector('#nameInput').value;
+             let email = document.querySelector('#emailInput').value;
+             let job = document.querySelector('#jobInput').value;
+             let employee = document.querySelector('div.d-none').id; //set id to employee such that employee reference will pull the id
+             
+             if(name == "" || name == null || email == "" || email== null || job == "" || job == null){
+                 alert('please fill all form inputs')
+                 return false;
+                 
+                } else {
+                    
+                    alert("attempting to update employee with id    " + employee)
+                    //check if id is not null
+                    if(employee){
+                        
+                    const result = await fetch(`https://kojoyeboah53i-d962a2da663c.herokuapp.com/api/ordabl/update-employee/${employee}`,{
+                        method: 'PATCH',
+                        headers: {
+                            'Content-type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            name: name,
+                            job_title: job,
+                            email: email
+
+                        })
+                    })
+                    if(result.status == 200 || result.status == 201){
+                        alert("employee updated successfully...!")
+                    }
+                    }
+
+               }
+
+         })
+
+
 
 
     } getAllEmployees();
