@@ -114,7 +114,7 @@ window.addEventListener('load', () => {
 
             } else {
 
-                const confirmed = confirm("attempting to update employee with id    " + employee)
+                const confirmed = confirm("Are you sure you want to update employee " + employee)
 
 
                 //check if id is not null
@@ -134,10 +134,11 @@ window.addEventListener('load', () => {
                     })
 
                     if (result.status == 200 || result.status == 201) {
-                        alert("employee updated successfully...!");
 
                         // this redirects to the same page with the updated changed
-                        window.location.href = window.location.href;
+                        window.location.href = "./dashboard.html";
+
+                        // alert("employee updated successfully...!");
                     }
                 }
 
