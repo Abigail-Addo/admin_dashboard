@@ -1,5 +1,15 @@
 window.addEventListener('load', () => {
 
+    //get admin name
+    const adminName = document.querySelector('#admin-name');
+    // adminName.innerHTML = "Abigail";
+    //get all url parameters
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.has('name')) {
+        adminName.innerHTML = params.get('name');
+    }
+
     async function getAllEmployees() {
         const results = await fetch('https://kojoyeboah53i-d962a2da663c.herokuapp.com/api/ordabl/employer/1')
         const response = await results.json();
@@ -172,4 +182,3 @@ window.addEventListener('load', () => {
     });
 
 })
-
