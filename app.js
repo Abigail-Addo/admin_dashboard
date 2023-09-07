@@ -19,7 +19,7 @@ window.addEventListener('load', () => {
             message.textContent = 'Field cannot be empty';
 
             setTimeout(() => {
-               error.style.display = 'none';
+                error.style.display = 'none';
             }, 3000);
             return;
         } else {
@@ -41,7 +41,7 @@ window.addEventListener('load', () => {
             if (result.status != 200) {
                 //get message from response
                 const response = await result.json()
-                
+
                 error.style.display = 'block';
                 message.textContent = response.message;
 
@@ -52,13 +52,31 @@ window.addEventListener('load', () => {
                 return;
             }
 
+
             if (result.status == 200) {
                 //getting user back from server
                 const response = await result.json();
                 let name = response.name;
-                // console.log(name)
+                let token = response.token;
+
+                //clear previous storage
+                localStorage.setItem('name', "");
+                localStorage.setItem('tokenKey', "");
+
+                //set new storage
+                localStorage.setItem('name', name);
+                localStorage.setItem('tokenKey', token);
+
                 window.location.href = `./dashboard.html?name=${name}`;
             }
+
+            // if (result.status == 200) {
+            //     //getting user back from server
+            //     const response = await result.json();
+            //     let name = response.name;
+            //     // console.log(name)
+            //     window.location.href = `./dashboard.html?name=${name}`;
+            // }
 
         }
 
